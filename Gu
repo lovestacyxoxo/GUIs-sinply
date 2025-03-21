@@ -1,0 +1,433 @@
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local TweenService = game:GetService("TweenService")
+local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "SimplyTheGUI"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = PlayerGui
+
+LocalPlayer.CharacterRemoving:Connect(function()
+    wait(1)
+    ScreenGui.Parent = PlayerGui
+end)
+
+local function styleText(uiElement)
+    uiElement.Font = Enum.Font.Arcade
+    uiElement.TextSize = 26
+    uiElement.TextColor3 = Color3.fromRGB(230,230,250)
+    uiElement.TextStrokeColor3 = Color3.new(0,0,0)
+    uiElement.TextStrokeTransparency = 0
+end
+
+local function createAbilityButton(parent, btnSize, btnPos, btnText, callback)
+    local btn = Instance.new("TextButton")
+    btn.Size = btnSize
+    btn.Position = btnPos
+    btn.Text = btnText
+    btn.BackgroundColor3 = Color3.fromRGB(100,50,150)
+    btn.Font = Enum.Font.Arcade
+    btn.TextSize = 26
+    btn.TextColor3 = Color3.fromRGB(255,255,255)
+    btn.Parent = parent
+    styleText(btn)
+    local corner = Instance.new("UICorner", btn)
+    corner.CornerRadius = UDim.new(0,12)
+    btn.MouseButton1Click:Connect(callback)
+    return btn
+end
+
+local function setSectionTabsEnabled(enabled, tabButtons)
+    for _, btn in pairs(tabButtons) do
+        btn.Active = enabled
+        btn.AutoButtonColor = enabled
+    end
+end
+
+local KeyFrame = Instance.new("Frame")
+KeyFrame.Size = UDim2.new(0,300,0,150)
+KeyFrame.Position = UDim2.new(0.5,-150,0.5,-75)
+KeyFrame.BackgroundColor3 = Color3.fromRGB(78,54,103)
+KeyFrame.BackgroundTransparency = 0.25
+KeyFrame.Draggable = true
+KeyFrame.Active = true
+KeyFrame.Parent = ScreenGui
+
+local keyCorner = Instance.new("UICorner", KeyFrame)
+keyCorner.CornerRadius = UDim.new(0,10)
+
+local KeyBox = Instance.new("TextBox")
+KeyBox.Size = UDim2.new(0.8,0,0.3,0)
+KeyBox.Position = UDim2.new(0.1,0,0.2,0)
+KeyBox.PlaceholderText = "Enter Key..."
+KeyBox.BackgroundColor3 = Color3.fromRGB(100,75,125)
+KeyBox.Parent = KeyFrame
+styleText(KeyBox)
+
+local SubmitButton = Instance.new("TextButton")
+SubmitButton.Size = UDim2.new(0.8,0,0.3,0)
+SubmitButton.Position = UDim2.new(0.1,0,0.6,0)
+SubmitButton.Text = "Submit Key"
+SubmitButton.BackgroundColor3 = Color3.fromRGB(100,75,125)
+SubmitButton.Parent = KeyFrame
+styleText(SubmitButton)
+
+local submitCorner = Instance.new("UICorner", SubmitButton)
+submitCorner.CornerRadius = UDim.new(0,8)
+
+local correctKey = "UgleSky"
+
+SubmitButton.MouseButton1Click:Connect(function()
+    if KeyBox.Text == correctKey then
+        KeyFrame.Visible = false
+        MainGui.Visible = true
+    else
+        KeyBox.Text = ""
+        KeyBox.PlaceholderText = "Invalid Key, try again"
+    end
+end)
+
+local guiWidth = 600
+local fullHeight = 250
+local topBarHeight = 50
+local tabHeight = 40
+
+local MainGui = Instance.new("Frame")
+MainGui.Size = UDim2.new(0, guiWidth, 0, fullHeight)
+MainGui.Position = UDim2.new(0.5, -guiWidth/2, 0.35, 0)
+MainGui.BackgroundColor3 = Color3.fromRGB(78,54,103)
+MainGui.BackgroundTransparency = 0.35
+MainGui.Draggable = true
+MainGui.Active = true
+MainGui.Visible = false
+MainGui.Parent = ScreenGui
+
+local MainUICorner = Instance.new("UICorner", MainGui)
+MainUICorner.CornerRadius = UDim.new(0,10)
+
+local mainGradient = Instance.new("UIGradient", MainGui)
+mainGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(78,54,103)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(60,40,85))
+})
+
+local TopBar = Instance.new("Frame", MainGui)
+TopBar.Size = UDim2.new(1,0,0, topBarHeight)
+TopBar.BackgroundColor3 = Color3.fromRGB(60,40,85)
+
+local topBarGradient = Instance.new("UIGradient", TopBar)
+topBarGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(60,40,85)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(50,30,70))
+})
+
+local GuiTitle = Instance.new("TextLabel", TopBar)
+GuiTitle.Size = UDim2.new(0.8,0,1,0)
+GuiTitle.Position = UDim2.new(0.05,0,0,0)
+GuiTitle.Text = "Custom Abilities GUI"
+GuiTitle.BackgroundTransparency = 1
+styleText(GuiTitle)
+
+local XButton = Instance.new("TextButton", TopBar)
+XButton.Size = UDim2.new(0.15,0,1,0)
+XButton.Position = UDim2.new(0.85,0,0,0)
+XButton.Text = "X"
+XButton.BackgroundColor3 = Color3.fromRGB(120,50,100)
+styleText(XButton)
+
+local TopBarCorner = Instance.new("UICorner", TopBar)
+TopBarCorner.CornerRadius = UDim.new(0,10)
+local XButtonCorner = Instance.new("UICorner", XButton)
+XButtonCorner.CornerRadius = UDim.new(0,6)
+
+local contentAreaHeight = fullHeight - topBarHeight - tabHeight
+local tdFrame = Instance.new("ScrollingFrame", MainGui)
+tdFrame.Size = UDim2.new(1,0,0, contentAreaHeight)
+tdFrame.Position = UDim2.new(0,0,0, topBarHeight)
+tdFrame.BackgroundTransparency = 1
+tdFrame.CanvasSize = UDim2.new(0,0,2.5,0)
+tdFrame.Visible = true
+
+local infectionFrame = Instance.new("ScrollingFrame", MainGui)
+infectionFrame.Size = UDim2.new(1,0,0, contentAreaHeight)
+infectionFrame.Position = UDim2.new(0,0,0, topBarHeight)
+infectionFrame.BackgroundTransparency = 1
+infectionFrame.CanvasSize = UDim2.new(0,0,1,0)
+infectionFrame.Visible = false
+
+local SectionTab = Instance.new("Frame", MainGui)
+SectionTab.Size = UDim2.new(1,0,0, tabHeight)
+SectionTab.Position = UDim2.new(0,0,1, -tabHeight)
+SectionTab.BackgroundColor3 = Color3.fromRGB(60,40,85)
+
+local sectionsLabel = Instance.new("TextLabel", SectionTab)
+sectionsLabel.Size = UDim2.new(0.3,0,1,0)
+sectionsLabel.Position = UDim2.new(0.02,0,0,0)
+sectionsLabel.Text = "sections"
+sectionsLabel.BackgroundTransparency = 1
+sectionsLabel.Font = Enum.Font.SourceSans
+sectionsLabel.TextColor3 = Color3.fromRGB(128,128,128)
+sectionsLabel.TextScaled = true
+
+local tdTab = Instance.new("TextButton", SectionTab)
+tdTab.Size = UDim2.new(0.25,0,1,0)
+tdTab.Position = UDim2.new(0.45,0,0,0)
+tdTab.Text = "Td"
+tdTab.BackgroundColor3 = Color3.fromRGB(30,0,40)
+tdTab.Font = Enum.Font.SourceSans
+tdTab.TextScaled = true
+tdTab.TextColor3 = Color3.fromRGB(128,128,128)
+
+local infTab = Instance.new("TextButton", SectionTab)
+infTab.Size = UDim2.new(0.25,0,1,0)
+infTab.Position = UDim2.new(0.72,0,0,0)
+infTab.Text = "infection"
+infTab.BackgroundColor3 = Color3.fromRGB(30,0,40)
+infTab.Font = Enum.Font.SourceSans
+infTab.TextScaled = true
+infTab.TextColor3 = Color3.fromRGB(128,128,128)
+
+local tdTabCorner = Instance.new("UICorner", tdTab)
+tdTabCorner.CornerRadius = UDim.new(0,8)
+local infTabCorner = Instance.new("UICorner", infTab)
+infTabCorner.CornerRadius = UDim.new(0,8)
+
+local function updateTabs(selected)
+    if selected == "td" then
+        tdTab.TextColor3 = Color3.new(1,1,1)
+        infTab.TextColor3 = Color3.fromRGB(128,128,128)
+    elseif selected == "infection" then
+        infTab.TextColor3 = Color3.new(1,1,1)
+        tdTab.TextColor3 = Color3.fromRGB(128,128,128)
+    end
+end
+updateTabs("td")
+
+tdTab.MouseButton1Click:Connect(function()
+    if MainGui.BackgroundTransparency == 1 then return end
+    tdFrame.Visible = true
+    infectionFrame.Visible = false
+    updateTabs("td")
+end)
+
+infTab.MouseButton1Click:Connect(function()
+    if MainGui.BackgroundTransparency == 1 then return end
+    tdFrame.Visible = false
+    infectionFrame.Visible = true
+    updateTabs("infection")
+end)
+
+local function setSectionTabsEnabled(enabled)
+    tdTab.Active = enabled
+    tdTab.AutoButtonColor = enabled
+    infTab.Active = enabled
+    infTab.AutoButtonColor = enabled
+end
+
+local function createTDButton(name, posY, callback)
+    return createAbilityButton(tdFrame, UDim2.new(0,250,0,60), UDim2.new(0.125,0, posY, 0), name, callback)
+end
+
+local customAbilitiesButton
+customAbilitiesButton = createTDButton("Custom Abillities", 0.05, function()
+    customAbilitiesButton.Visible = false
+    local player = LocalPlayer
+    if game.PlaceId == 14722542056 then
+        local displayPlayers = ReplicatedStorage:WaitForChild("displayPlayers")
+        local playerStats = displayPlayers:FindFirstChild(player.Name):WaitForChild("stats")
+        local characterValue = playerStats:WaitForChild("character")
+        local char = characterValue.Value:lower()
+        if char == "tails" then
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/lovestacyxoxo/Tail-boost/refs/heads/main/Tail%20boosta"))()
+        elseif char == "metalsonic" then
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/lovestacyxoxo/Metals-over-drive-/refs/heads/main/Ovur%20druv"))()
+        elseif char == "amy" then
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/lovestacyxoxo/HEMER-BANC/refs/heads/main/Eimi"))()
+        elseif char == "silver" then
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/lovestacyxoxo/Silv-hov/refs/heads/main/Ahc"))()
+        elseif char == "sally" then
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/lovestacyxoxo/Silli-blink/refs/heads/main/Stap"))()
+        elseif char == "cream" then
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/lovestacyxoxo/For-cream-glide/refs/heads/main/Git"))()
+        elseif char == "rouge" then
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/lovestacyxoxo/Rouge-glide/refs/heads/main/Rouges%20glide%20td%201.3"))()
+        elseif char == "sonicexe" then
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/lovestacyxoxo/Foundyou/refs/heads/main/Sonicexe"))()
+        end
+    end
+end)
+
+createTDButton("ESP", 0.25, function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/lovestacyxoxo/High-esp-laight/refs/heads/main/Esp"))()
+end)
+
+createTDButton("Cancel OvrHel", 0.45, function()
+    local screenGui = Instance.new("ScreenGui")
+    local button = Instance.new("TextButton")
+    screenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+    button.Size = UDim2.new(0,100,0,100)
+    button.Position = UDim2.new(1,-110,0,10)
+    button.BackgroundColor3 = Color3.fromRGB(173,216,230)
+    button.Text = "C-heal"
+    button.Font = Enum.Font.GothamBold
+    button.TextSize = 24
+    button.TextColor3 = Color3.new(1,1,1)
+    button.BorderSizePixel = 0
+    button.BackgroundTransparency = 0.5
+    button.AutoButtonColor = false
+    button.ClipsDescendants = true
+    local corner = Instance.new("UICorner", button)
+    corner.CornerRadius = UDim.new(0.5,0)
+    button.Parent = screenGui
+    button.MouseButton1Click:Connect(function()
+        local args = { [1] = "cancelOverheal" }
+        ReplicatedStorage.remotes.abilities:FireServer(unpack(args))
+    end)
+end)
+
+createTDButton("Self Destruct", 0.65, function()
+    local screenGui = Instance.new("ScreenGui")
+    local button = Instance.new("TextButton")
+    screenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+    button.Size = UDim2.new(0,100,0,100)
+    button.Position = UDim2.new(1,-110,0,10)
+    button.BackgroundColor3 = Color3.fromRGB(173,216,230)
+    button.Text = "Self-Dest"
+    button.Font = Enum.Font.GothamBold
+    button.TextSize = 24
+    button.TextColor3 = Color3.new(1,1,1)
+    button.BorderSizePixel = 0
+    button.BackgroundTransparency = 0.5
+    button.AutoButtonColor = false
+    button.ClipsDescendants = true
+    local corner = Instance.new("UICorner", button)
+    corner.CornerRadius = UDim.new(0.5,0)
+    button.Parent = screenGui
+    button.MouseButton1Click:Connect(function()
+        local args = { [1] = "selfDestruct" }
+        ReplicatedStorage.remotes.abilities:FireServer(unpack(args))
+    end)
+end)
+
+createTDButton("Anim Pack Cream", 0.85, function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/lovestacyxoxo/Sonic-2-pink-edition-cream/refs/heads/main/Sonic%202%20pink%20edition%20cream%20animation"))()
+end)
+
+createAbilityButton(infectionFrame, UDim2.new(0,220,0,50), UDim2.new(0.125,0,0.05,0), "Hammer Spin", function()
+    local Players = game:GetService("Players")
+    local RunService = game:GetService("RunService")
+    local TweenService = game:GetService("TweenService")
+    local player = Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local humanoidRootPart = char:WaitForChild("HumanoidRootPart")
+    local humanoid = char:FindFirstChildOfClass("Humanoid")
+    local remote = char:FindFirstChild("swing_client") and char:FindFirstChild("swing_client"):FindFirstChild("fire")
+    local cooldownTime = 15
+    local isOnCooldown = false
+    local infectionScreenGui = Instance.new("ScreenGui")
+    local infectionButton = Instance.new("TextButton")
+    local infectionCorner = Instance.new("UICorner")
+    infectionScreenGui.Parent = player:WaitForChild("PlayerGui")
+    infectionButton.Size = UDim2.new(0,60,0,60)
+    infectionButton.Position = UDim2.new(1,-80,0.5,0)
+    infectionButton.BackgroundColor3 = Color3.fromRGB(0,0,0)
+    infectionButton.BackgroundTransparency = 0.4
+    infectionButton.Text = "SPI"
+    infectionButton.TextColor3 = Color3.fromRGB(255,255,255)
+    infectionButton.TextScaled = true
+    infectionButton.Font = Enum.Font.Arcade
+    infectionCorner.Parent = infectionButton
+    infectionCorner.CornerRadius = UDim.new(1,0)
+    infectionButton.Parent = infectionScreenGui
+    local function dash()
+        if isOnCooldown then return end
+        isOnCooldown = true
+        if humanoidRootPart and humanoid then
+            local animator = humanoid:FindFirstChildOfClass("Animator") or Instance.new("Animator", humanoid)
+            local dashAnimation = Instance.new("Animation")
+            dashAnimation.AnimationId = "rbxassetid://91326134454679"
+            local track = animator:LoadAnimation(dashAnimation)
+            task.spawn(function()
+                for i = 1, 4 do
+                    if remote then remote:FireServer() end
+                    task.wait(0.25)
+                end
+            end)
+            local bodyVelocity = Instance.new("BodyVelocity")
+            bodyVelocity.Velocity = humanoidRootPart.CFrame.LookVector * 40
+            bodyVelocity.MaxForce = Vector3.new(50000,0,50000)
+            bodyVelocity.Parent = humanoidRootPart
+            track:Play()
+            task.wait(1)
+            bodyVelocity:Destroy()
+        end
+        infectionButton.TextColor3 = Color3.fromRGB(255,0,0)
+        infectionButton.Active = false
+        infectionButton.AutoButtonColor = false
+        local fadeTween = TweenService:Create(
+            infectionButton,
+            TweenInfo.new(cooldownTime, Enum.EasingStyle.Linear),
+            {TextColor3 = Color3.fromRGB(255,255,255)}
+        )
+        fadeTween:Play()
+        task.wait(cooldownTime)
+        infectionButton.Active = true
+        infectionButton.AutoButtonColor = true
+        isOnCooldown = false
+    end
+    infectionButton.MouseButton1Click:Connect(dash)
+    print("Hammer Spin button activated!")
+end)
+
+SubmitButton.MouseButton1Click:Connect(function()
+    if KeyBox.Text == correctKey then
+        KeyFrame.Visible = false
+        MainGui.Visible = true
+    else
+        KeyBox.Text = ""
+        KeyBox.PlaceholderText = "Invalid Key, try again"
+    end
+end)
+
+local function setContentActive(active)
+    tdFrame.Active = active
+    infectionFrame.Active = active
+    setSectionTabsEnabled(active, {tdTab, infTab})
+end
+
+XButton.MouseButton1Click:Connect(function()
+    if guiExpanded then
+        MainGui.Size = UDim2.new(0, guiWidth, 0, topBarHeight + tabHeight)
+        tdFrame.Visible = false
+        infectionFrame.Visible = false
+        SectionTab.Visible = false
+        setContentActive(false)
+    else
+        MainGui.Size = UDim2.new(0, guiWidth, 0, fullHeight)
+        SectionTab.Visible = true
+        if tdTab.TextColor3 == Color3.new(1,1,1) then
+            tdFrame.Visible = true
+            infectionFrame.Visible = false
+        else
+            tdFrame.Visible = false
+            infectionFrame.Visible = true
+        end
+        setContentActive(true)
+    end
+    guiExpanded = not guiExpanded
+end)
+
+function setSectionTabsEnabled(enabled, tabs)
+    for _, tab in pairs(tabs) do
+        tab.Active = enabled
+        tab.AutoButtonColor = enabled
+    end
+end
+
+LocalPlayer.CharacterAdded:Connect(function(character)
+    if customAbilitiesButton then
+        customAbilitiesButton.Visible = true
+    end
+end)

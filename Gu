@@ -126,7 +126,7 @@ topBarGradient.Color = ColorSequence.new({
 local GuiTitle = Instance.new("TextLabel", TopBar)
 GuiTitle.Size = UDim2.new(0.8,0,1,0)
 GuiTitle.Position = UDim2.new(0.05,0,0,0)
-GuiTitle.Text = "Custom Abilities GUI"
+GuiTitle.Text = "SimplyTheBestGUI"
 GuiTitle.BackgroundTransparency = 1
 styleText(GuiTitle)
 

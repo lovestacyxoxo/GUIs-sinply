@@ -331,7 +331,7 @@ createAbilityButton(infectionFrame, UDim2.new(0,220,0,50), UDim2.new(0.125,0,0.0
     local infectionCorner = Instance.new("UICorner")
     infectionScreenGui.Parent = player:WaitForChild("PlayerGui")
     infectionButton.Size = UDim2.new(0,60,0,60)
-    infectionButton.Position = UDim2.new(1,-80,0.5,0)
+    infectionButton.Position = UDim2.new(1,-210,0.5,0)
     infectionButton.BackgroundColor3 = Color3.fromRGB(0,0,0)
     infectionButton.BackgroundTransparency = 0.4
     infectionButton.Text = "SPI"

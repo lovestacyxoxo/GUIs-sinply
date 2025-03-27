@@ -255,6 +255,8 @@ customAbilitiesButton = createTDButton("Custom Abillities", 0.05, function()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/lovestacyxoxo/Rouge-glide/refs/heads/main/Rouges%20glide%20td%201.3"))()
         elseif char == "sonicexe" then
             loadstring(game:HttpGet("https://raw.githubusercontent.com/lovestacyxoxo/Foundyou/refs/heads/main/Sonicexe"))()
+        elseif char == "eggman" then
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/lovestacyxoxo/Eggturn/refs/heads/main/Cst"))()
         end
     end
 end)

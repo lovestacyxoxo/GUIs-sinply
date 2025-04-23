@@ -257,6 +257,8 @@ customAbilitiesButton = createTDButton("Custom Abillities", 0.05, function()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/lovestacyxoxo/Foundyou/refs/heads/main/Sonicexe"))()
         elseif char == "eggman" then
             loadstring(game:HttpGet("https://raw.githubusercontent.com/lovestacyxoxo/eggmansfatty/refs/heads/main/eggy"))()
+        elseif char == "kolossos" then
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/lovestacyxoxo/Upheaval/refs/heads/main/Kolossos"))()
         end
     end
 end)

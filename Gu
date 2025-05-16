@@ -204,7 +204,7 @@ local espBtn = createAbilityButton(dcFrame, UDim2.new(0,180,0,36), UDim2.new(0.1
     -- Map of character names to Color3
     local nameToColor = {
         sonic       = Color3.fromRGB(  0,   0, 255),
-        ["sonic exe"] = Color3.fromRGB(  0,   0, 139),
+        sonic.exe   = Color3.fromRGB(  0,   0, 139),
         cream       = Color3.fromRGB(255, 253, 208),
         vanilla     = Color3.fromRGB(255, 255, 204),
         eggman      = Color3.fromRGB(139,   0,   0),

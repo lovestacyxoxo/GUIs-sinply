@@ -1,5 +1,3 @@
--- Full GUI Script: Key Entry, DC Section with Damage Player, and Infection SPI Button
-
 local Players           = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService      = game:GetService("TweenService")
@@ -18,11 +16,11 @@ end)
 
 -- Styling helper
 local function styleText(uiElement)
-    uiElement.Font               = Enum.Font.Arcade
-    uiElement.TextSize           = 26
-    uiElement.TextColor3         = Color3.fromRGB(230,230,250)
-    uiElement.TextStrokeColor3   = Color3.new(0,0,0)
-    uiElement.TextStrokeTransparency = 0
+    uiElement.Font                     = Enum.Font.Arcade
+    uiElement.TextSize                 = 26
+    uiElement.TextColor3               = Color3.fromRGB(230,230,250)
+    uiElement.TextStrokeColor3         = Color3.new(0,0,0)
+    uiElement.TextStrokeTransparency   = 0
 end
 
 -- Button factory
@@ -44,7 +42,7 @@ local function createAbilityButton(parent, size, pos, text, callback)
 end
 
 -- === Key Entry Frame ===
-local correctKey = "RIPtd"
+local correctKey = "sallyrally"
 local KeyFrame = Instance.new("Frame")
 KeyFrame.Size               = UDim2.new(0,280,0,130)
 KeyFrame.Position           = UDim2.new(0.5,-140,0.5,-65)
@@ -71,36 +69,36 @@ styleText(SubmitKeyBtn)
 Instance.new("UICorner", SubmitKeyBtn).CornerRadius = UDim.new(0,8)
 
 -- === Main GUI ===
-local guiWidth, fullHeight   = 500, 300
+local guiWidth, fullHeight    = 500, 300
 local topBarHeight, tabHeight = 40, 35
 local MainGui = Instance.new("Frame")
-MainGui.Size                = UDim2.new(0,guiWidth,0,fullHeight)
-MainGui.Position            = UDim2.new(0.5,-guiWidth/2,0.3,0)
-MainGui.BackgroundColor3    = Color3.fromRGB(78,54,103)
+MainGui.Size                 = UDim2.new(0,guiWidth,0,fullHeight)
+MainGui.Position             = UDim2.new(0.5,-guiWidth/2,0.3,0)
+MainGui.BackgroundColor3     = Color3.fromRGB(78,54,103)
 MainGui.BackgroundTransparency = 0.35
-MainGui.Draggable           = true
-MainGui.Active              = true
-MainGui.Visible             = false
-MainGui.Parent              = ScreenGui
+MainGui.Draggable            = true
+MainGui.Active               = true
+MainGui.Visible              = false
+MainGui.Parent               = ScreenGui
 Instance.new("UICorner", MainGui).CornerRadius = UDim.new(0,10)
 
 -- Top Bar
 local TopBar = Instance.new("Frame", MainGui)
-TopBar.Size                = UDim2.new(1,0,0,topBarHeight)
-TopBar.BackgroundColor3    = Color3.fromRGB(60,40,85)
+TopBar.Size                 = UDim2.new(1,0,0,topBarHeight)
+TopBar.BackgroundColor3     = Color3.fromRGB(60,40,85)
 Instance.new("UICorner", TopBar).CornerRadius = UDim.new(0,6)
 local TitleLabel = Instance.new("TextLabel", TopBar)
-TitleLabel.Size            = UDim2.new(0.7,0,1,0)
-TitleLabel.Position        = UDim2.new(0.05,0,0,0)
-TitleLabel.Text            = "SimplyTheBestGUI"
+TitleLabel.Size             = UDim2.new(0.7,0,1,0)
+TitleLabel.Position         = UDim2.new(0.05,0,0,0)
+TitleLabel.Text             = "SimplyTheBestGUI"
 TitleLabel.BackgroundTransparency = 1
 styleText(TitleLabel)
 
 local XButton = Instance.new("TextButton", TopBar)
-XButton.Size               = UDim2.new(0.15,0,1,0)
-XButton.Position           = UDim2.new(0.85,0,0,0)
-XButton.Text               = "X"
-XButton.BackgroundColor3   = Color3.fromRGB(120,50,100)
+XButton.Size                = UDim2.new(0.15,0,1,0)
+XButton.Position            = UDim2.new(0.85,0,0,0)
+XButton.Text                = "X"
+XButton.BackgroundColor3    = Color3.fromRGB(120,50,100)
 styleText(XButton)
 Instance.new("UICorner", XButton).CornerRadius = UDim.new(0,6)
 
@@ -122,9 +120,9 @@ Instance.new("UICorner", infectionFrame).CornerRadius = UDim.new(0,10)
 
 -- Section Tabs
 local SectionTab = Instance.new("Frame", MainGui)
-SectionTab.Size              = UDim2.new(1,0,0,tabHeight)
-SectionTab.Position          = UDim2.new(0,0,1,-tabHeight)
-SectionTab.BackgroundColor3  = Color3.fromRGB(60,40,85)
+SectionTab.Size             = UDim2.new(1,0,0,tabHeight)
+SectionTab.Position         = UDim2.new(0,0,1,-tabHeight)
+SectionTab.BackgroundColor3 = Color3.fromRGB(60,40,85)
 Instance.new("UICorner", SectionTab).CornerRadius = UDim.new(0,6)
 
 local dcTab = createAbilityButton(SectionTab, UDim2.new(0.25,0,1,0), UDim2.new(0.45,0,0,0), "DC", function()
@@ -184,8 +182,7 @@ local submitBtn = createAbilityButton(dcFrame, UDim2.new(0,100,0,40), UDim2.new(
     if selectedPlayerName then
         local target = Players:FindFirstChild(selectedPlayerName)
         if target and target.Character then
-            local args = {[1] = target.Character}
-            ReplicatedStorage:WaitForChild("PlayerRemoteEvents"):WaitForChild("yuriGrab"):FireServer(unpack(args))
+            ReplicatedStorage:WaitForChild("PlayerRemoteEvents"):WaitForChild("yuriGrab"):FireServer(target.Character)
             playerListFrame.Visible = false
         end
     end
@@ -201,26 +198,24 @@ end)
 
 -- === ESP Button ===
 local espBtn = createAbilityButton(dcFrame, UDim2.new(0,180,0,36), UDim2.new(0.1,0,0.76,0), "ESP", function()
-    -- Map of character names to Color3
     local nameToColor = {
-        sonic       = Color3.fromRGB(  0,   0, 255),
-        sonic.exe   = Color3.fromRGB(  0,   0, 139),
-        cream       = Color3.fromRGB(255, 253, 208),
-        vanilla     = Color3.fromRGB(255, 255, 204),
-        eggman      = Color3.fromRGB(139,   0,   0),
-        sans        = Color3.fromRGB(173, 216, 230),
-        cuphead     = Color3.fromRGB(255, 102, 102),
-        mugman      = Color3.fromRGB(153, 255, 204),
-        monika      = Color3.fromRGB(210, 180, 140),
-        sayori      = Color3.fromRGB(255, 218, 185),
-        frisk       = Color3.fromRGB(204, 229, 255),
-        yuri        = Color3.fromRGB(128,   0, 128),
-        chara       = Color3.fromRGB(  0, 255,   0),
-        boris       = Color3.fromRGB(101,  67,  33),
-        bendy       = Color3.fromRGB(  0,   0,   0),
+        sonic          = Color3.fromRGB(  0,   0, 255),
+        ["sonic.exe"]  = Color3.fromRGB(  0,   0, 139),
+        cream          = Color3.fromRGB(255, 253, 208),
+        vanilla        = Color3.fromRGB(255, 255, 204),
+        eggman         = Color3.fromRGB(139,   0,   0),
+        sans           = Color3.fromRGB(173, 216, 230),
+        cuphead        = Color3.fromRGB(255, 102, 102),
+        mugman         = Color3.fromRGB(153, 255, 204),
+        monika         = Color3.fromRGB(210, 180, 140),
+        sayori         = Color3.fromRGB(255, 218, 185),
+        frisk          = Color3.fromRGB(204, 229, 255),
+        yuri           = Color3.fromRGB(128,   0, 128),
+        chara          = Color3.fromRGB(  0, 255,   0),
+        boris          = Color3.fromRGB(101,  67,  33),
+        bendy          = Color3.fromRGB(  0,   0,   0),
     }
 
-    -- Highlight function
     local function applyHighlight(character, color)
         local old = character:FindFirstChild("NameHighlighter")
         if old then old:Destroy() end
@@ -233,7 +228,6 @@ local espBtn = createAbilityButton(dcFrame, UDim2.new(0,180,0,36), UDim2.new(0.1
         hl.Parent        = character
     end
 
-    -- Iterate existing and future players
     for _, player in ipairs(Players:GetPlayers()) do
         if player.Character then
             local folder = player.Character:FindFirstChild("CharacterFolder")
@@ -317,7 +311,7 @@ SubmitKeyBtn.MouseButton1Click:Connect(function()
         dcFrame.Visible = true
     else
         KeyBox.Text = ""
-        KeyBox.PlaceholderText = "Invalid Key, wow..."
+        KeyBox.PlaceholderText = "Invalid Key, try again"
     end
 end)
 
@@ -332,7 +326,7 @@ XButton.MouseButton1Click:Connect(function()
     else
         MainGui.Size = UDim2.new(0,guiWidth,0,fullHeight)
         SectionTab.Visible = true
-        if dcTab.Text == "DC" then dcFrame.Visible = true else infectionFrame.Visible = true end
+        if dcFrame.Visible then dcFrame.Visible = true else infectionFrame.Visible = true end
     end
     guiExpanded = not guiExpanded
 end)

@@ -42,7 +42,7 @@ local function createAbilityButton(parent, size, pos, text, callback)
 end
 
 -- === Key Entry Frame ===
-local correctKey = "RIPtd"
+local correctKey = "SkyUgle"
 local KeyFrame = Instance.new("Frame")
 KeyFrame.Size               = UDim2.new(0,280,0,130)
 KeyFrame.Position           = UDim2.new(0.5,-140,0.5,-65)

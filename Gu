@@ -16,54 +16,53 @@ end)
 
 -- Styling helper
 local function styleText(uiElement)
-    uiElement.Font                     = Enum.Font.Arcade
-    uiElement.TextSize                 = 26
-    uiElement.TextColor3               = Color3.fromRGB(230,230,250)
-    uiElement.TextStrokeColor3         = Color3.new(0,0,0)
-    uiElement.TextStrokeTransparency   = 0
+    uiElement.Font                   = Enum.Font.Arcade
+    uiElement.TextSize               = 26
+    uiElement.TextColor3             = Color3.fromRGB(230,230,250)
+    uiElement.TextStrokeColor3       = Color3.new(0,0,0)
+    uiElement.TextStrokeTransparency = 0
 end
 
 -- Button factory
 local function createAbilityButton(parent, size, pos, text, callback)
     local btn = Instance.new("TextButton")
-    btn.Size               = size
-    btn.Position           = pos
-    btn.Text               = text
-    btn.TextScaled         = true
-    btn.Font               = Enum.Font.Arcade
-    btn.BackgroundColor3   = Color3.fromRGB(120,100,150)
-    btn.TextColor3         = Color3.fromRGB(255,255,255)
-    btn.AutoButtonColor    = true
-    btn.Parent             = parent
-    local corner = Instance.new("UICorner", btn)
-    corner.CornerRadius = UDim.new(0, 8)
+    btn.Size             = size
+    btn.Position         = pos
+    btn.Text             = text
+    btn.TextScaled       = true
+    btn.Font             = Enum.Font.Arcade
+    btn.BackgroundColor3 = Color3.fromRGB(120,100,150)
+    btn.TextColor3       = Color3.fromRGB(255,255,255)
+    btn.AutoButtonColor  = true
+    btn.Parent           = parent
+    Instance.new("UICorner", btn).CornerRadius = UDim.new(0,8)
     btn.MouseButton1Click:Connect(callback)
     return btn
 end
 
 -- === Key Entry Frame ===
-local correctKey = "SkyUgle"
+local correctKey = "TD reborn"
 local KeyFrame = Instance.new("Frame")
-KeyFrame.Size               = UDim2.new(0,280,0,130)
-KeyFrame.Position           = UDim2.new(0.5,-140,0.5,-65)
-KeyFrame.BackgroundColor3   = Color3.fromRGB(78,54,103)
+KeyFrame.Size                 = UDim2.new(0,280,0,130)
+KeyFrame.Position             = UDim2.new(0.5,-140,0.5,-65)
+KeyFrame.BackgroundColor3     = Color3.fromRGB(78,54,103)
 KeyFrame.BackgroundTransparency = 0.25
-KeyFrame.Draggable          = true
-KeyFrame.Active             = true
-KeyFrame.Parent             = ScreenGui
+KeyFrame.Draggable            = true
+KeyFrame.Active               = true
+KeyFrame.Parent               = ScreenGui
 Instance.new("UICorner", KeyFrame).CornerRadius = UDim.new(0,10)
 
 local KeyBox = Instance.new("TextBox", KeyFrame)
-KeyBox.Size                 = UDim2.new(0.8,0,0.3,0)
-KeyBox.Position             = UDim2.new(0.1,0,0.2,0)
-KeyBox.PlaceholderText      = "Enter Key..."
-KeyBox.BackgroundColor3     = Color3.fromRGB(100,75,125)
+KeyBox.Size                   = UDim2.new(0.8,0,0.3,0)
+KeyBox.Position               = UDim2.new(0.1,0,0.2,0)
+KeyBox.PlaceholderText        = "Enter Key..."
+KeyBox.BackgroundColor3       = Color3.fromRGB(100,75,125)
 styleText(KeyBox)
 
 local SubmitKeyBtn = Instance.new("TextButton", KeyFrame)
-SubmitKeyBtn.Size           = UDim2.new(0.8,0,0.3,0)
-SubmitKeyBtn.Position       = UDim2.new(0.1,0,0.6,0)
-SubmitKeyBtn.Text           = "Submit Key"
+SubmitKeyBtn.Size             = UDim2.new(0.8,0,0.3,0)
+SubmitKeyBtn.Position         = UDim2.new(0.1,0,0.6,0)
+SubmitKeyBtn.Text             = "Submit Key"
 SubmitKeyBtn.BackgroundColor3 = Color3.fromRGB(100,75,125)
 styleText(SubmitKeyBtn)
 Instance.new("UICorner", SubmitKeyBtn).CornerRadius = UDim.new(0,8)
@@ -71,15 +70,17 @@ Instance.new("UICorner", SubmitKeyBtn).CornerRadius = UDim.new(0,8)
 -- === Main GUI ===
 local guiWidth, fullHeight    = 500, 300
 local topBarHeight, tabHeight = 40, 35
+local contentHeight           = fullHeight - topBarHeight - tabHeight
+
 local MainGui = Instance.new("Frame")
-MainGui.Size                 = UDim2.new(0,guiWidth,0,fullHeight)
-MainGui.Position             = UDim2.new(0.5,-guiWidth/2,0.3,0)
-MainGui.BackgroundColor3     = Color3.fromRGB(78,54,103)
+MainGui.Size                   = UDim2.new(0,guiWidth,0,fullHeight)
+MainGui.Position               = UDim2.new(0.5,-guiWidth/2,0.3,0)
+MainGui.BackgroundColor3       = Color3.fromRGB(78,54,103)
 MainGui.BackgroundTransparency = 0.35
-MainGui.Draggable            = true
-MainGui.Active               = true
-MainGui.Visible              = false
-MainGui.Parent               = ScreenGui
+MainGui.Draggable              = true
+MainGui.Active                 = true
+MainGui.Visible                = false
+MainGui.Parent                 = ScreenGui
 Instance.new("UICorner", MainGui).CornerRadius = UDim.new(0,10)
 
 -- Top Bar
@@ -87,6 +88,7 @@ local TopBar = Instance.new("Frame", MainGui)
 TopBar.Size                 = UDim2.new(1,0,0,topBarHeight)
 TopBar.BackgroundColor3     = Color3.fromRGB(60,40,85)
 Instance.new("UICorner", TopBar).CornerRadius = UDim.new(0,6)
+
 local TitleLabel = Instance.new("TextLabel", TopBar)
 TitleLabel.Size             = UDim2.new(0.7,0,1,0)
 TitleLabel.Position         = UDim2.new(0.05,0,0,0)
@@ -102,102 +104,91 @@ XButton.BackgroundColor3    = Color3.fromRGB(120,50,100)
 styleText(XButton)
 Instance.new("UICorner", XButton).CornerRadius = UDim.new(0,6)
 
--- Content Frames
-local contentHeight = fullHeight - topBarHeight - tabHeight
-local dcFrame = Instance.new("Frame", MainGui)
-dcFrame.Size                = UDim2.new(1,0,0,contentHeight)
-dcFrame.Position            = UDim2.new(0,0,0,topBarHeight)
+-- === DC Section: ScrollingFrame ===
+local selectedDamageUser = nil
+local selectedHpUser     = nil
+
+local dcFrame = Instance.new("ScrollingFrame", MainGui)
+dcFrame.Name                   = "dcFrame"
+dcFrame.Size                   = UDim2.new(1,0,0,contentHeight)
+dcFrame.Position               = UDim2.new(0,0,0,topBarHeight)
 dcFrame.BackgroundTransparency = 1
-dcFrame.Visible             = false
+dcFrame.CanvasSize             = UDim2.new(0,0,0,840)
+dcFrame.ScrollBarThickness     = 6
+dcFrame.Visible                = false
 Instance.new("UICorner", dcFrame).CornerRadius = UDim.new(0,10)
 
-local infectionFrame = Instance.new("Frame", MainGui)
-infectionFrame.Size         = dcFrame.Size
-infectionFrame.Position     = dcFrame.Position
-infectionFrame.BackgroundTransparency = 1
-infectionFrame.Visible      = false
-Instance.new("UICorner", infectionFrame).CornerRadius = UDim.new(0,10)
-
--- Section Tabs
-local SectionTab = Instance.new("Frame", MainGui)
-SectionTab.Size             = UDim2.new(1,0,0,tabHeight)
-SectionTab.Position         = UDim2.new(0,0,1,-tabHeight)
-SectionTab.BackgroundColor3 = Color3.fromRGB(60,40,85)
-Instance.new("UICorner", SectionTab).CornerRadius = UDim.new(0,6)
-
-local dcTab = createAbilityButton(SectionTab, UDim2.new(0.25,0,1,0), UDim2.new(0.45,0,0,0), "DC", function()
-    dcFrame.Visible = true
-    infectionFrame.Visible = false
-end)
-
-local infTab = createAbilityButton(SectionTab, UDim2.new(0.25,0,1,0), UDim2.new(0.72,0,0,0), "infection", function()
-    dcFrame.Visible = false
-    infectionFrame.Visible = true
-end)
-
--- === DC Section: Damage Player UI ===
-local selectedPlayerName = nil
-
+-- Player list sub-frame
 local playerListFrame = Instance.new("ScrollingFrame", dcFrame)
-playerListFrame.Size            = UDim2.new(0.6,0,0.6,0)
-playerListFrame.Position        = UDim2.new(0.2,0,0.2,0)
+playerListFrame.Size            = UDim2.new(0.6,0,0.4,0)
 playerListFrame.BackgroundColor3= Color3.fromRGB(100,75,125)
 playerListFrame.CanvasSize      = UDim2.new(0,0,0,0)
 playerListFrame.ScrollBarThickness = 6
 playerListFrame.Visible         = false
 Instance.new("UICorner", playerListFrame).CornerRadius = UDim.new(0,8)
 
-local function refreshPlayerList()
-    for _, child in ipairs(playerListFrame:GetChildren()) do
-        if child:IsA("TextButton") then child:Destroy() end
+local function refreshPlayerList(mode)
+    if mode == "damage" then
+        playerListFrame.Position = UDim2.new(0.2,0,0.2,0)
+        playerListFrame.Size     = UDim2.new(0.6,0,0.4,0)
+    else
+        playerListFrame.Position = UDim2.new(0.2,0,0.64,0)
+        playerListFrame.Size     = UDim2.new(0.6,0,0.3,0)
     end
-    local yPos = 0
+    for _, c in ipairs(playerListFrame:GetChildren()) do
+        if c:IsA("TextButton") then c:Destroy() end
+    end
+    local y = 0
     for _, plr in ipairs(Players:GetPlayers()) do
         local btn = Instance.new("TextButton", playerListFrame)
-        btn.Size = UDim2.new(1,-10,0,30)
-        btn.Position = UDim2.new(0,5,0,yPos)
-        btn.Text = plr.Name
-        btn.TextColor3 = Color3.fromRGB(255,255,255)
-        btn.BackgroundColor3 = Color3.fromRGB(120,100,150)
-        btn.Font = Enum.Font.SourceSansBold
-        btn.TextScaled = true
+        btn.Size            = UDim2.new(1,-10,0,30)
+        btn.Position        = UDim2.new(0,5,0,y)
+        btn.Text            = plr.Name
+        btn.Font            = Enum.Font.SourceSansBold
+        btn.TextScaled      = true
+        btn.TextColor3      = Color3.fromRGB(255,255,255)
+        btn.BackgroundColor3= Color3.fromRGB(120,100,150)
         Instance.new("UICorner", btn).CornerRadius = UDim.new(0,6)
         btn.MouseButton1Click:Connect(function()
-            selectedPlayerName = plr.Name
+            if mode == "damage" then
+                selectedDamageUser = plr.Name
+            else
+                selectedHpUser = plr.Name
+            end
             playerListFrame.Visible = false
         end)
-        yPos = yPos + 35
+        y = y + 35
     end
-    playerListFrame.CanvasSize = UDim2.new(0,0,0,yPos)
+    playerListFrame.CanvasSize = UDim2.new(0,0,0,y)
 end
-Players.PlayerAdded:Connect(refreshPlayerList)
-Players.PlayerRemoving:Connect(refreshPlayerList)
 
-local dmgBtn = createAbilityButton(dcFrame, UDim2.new(0,200,0,50), UDim2.new(0.1,0,0.1,0), "Damage Player", function()
+Players.PlayerAdded:Connect(function() refreshPlayerList("damage") end)
+Players.PlayerRemoving:Connect(function() refreshPlayerList("damage") end)
+
+-- DC buttons
+createAbilityButton(dcFrame, UDim2.new(0,200,0,50), UDim2.new(0.1,0,0.05,0), "Damage Player", function()
     playerListFrame.Visible = not playerListFrame.Visible
-    if playerListFrame.Visible then refreshPlayerList() end
+    if playerListFrame.Visible then refreshPlayerList("damage") end
 end)
 
-local submitBtn = createAbilityButton(dcFrame, UDim2.new(0,100,0,40), UDim2.new(0.7,0,0.1,0), "Submit", function()
-    if selectedPlayerName then
-        local target = Players:FindFirstChild(selectedPlayerName)
-        if target and target.Character then
-            ReplicatedStorage:WaitForChild("PlayerRemoteEvents"):WaitForChild("yuriGrab"):FireServer(target.Character)
-            playerListFrame.Visible = false
+createAbilityButton(dcFrame, UDim2.new(0,100,0,40), UDim2.new(0.7,0,0.05,0), "Submit", function()
+    if selectedDamageUser then
+        local t = Players:FindFirstChild(selectedDamageUser)
+        if t and t.Character then
+            ReplicatedStorage.PlayerRemoteEvents.yuriGrab:FireServer(t.Character)
         end
     end
 end)
 
--- === Heart Attack Button ===
-local heartAttackBtn = createAbilityButton(dcFrame, UDim2.new(0,180,0,36), UDim2.new(0.1,0,0.55,0), "Heart Attack", function()
-    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-    local deadVal = char:WaitForChild("CharacterValues"):WaitForChild("SurvivorValues"):WaitForChild("Dead")
-    deadVal.Value = true
-    task.delay(12, function() deadVal.Value = false end)
+createAbilityButton(dcFrame, UDim2.new(0,180,0,36), UDim2.new(0.1,0,0.18,0), "Heart Attack", function()
+    local c = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    local dv = c:WaitForChild("CharacterValues"):WaitForChild("SurvivorValues"):WaitForChild("Dead")
+    dv.Value = true
+    task.delay(12, function() dv.Value = false end)
 end)
 
--- === ESP Button ===
-local espBtn = createAbilityButton(dcFrame, UDim2.new(0,180,0,36), UDim2.new(0.1,0,0.76,0), "ESP", function()
+-- ESP button (complete)
+local function enableESP()
     local nameToColor = {
         sonic          = Color3.fromRGB(  0,   0, 255),
         ["sonic.exe"]  = Color3.fromRGB(  0,   0, 139),
@@ -215,126 +206,167 @@ local espBtn = createAbilityButton(dcFrame, UDim2.new(0,180,0,36), UDim2.new(0.1
         boris          = Color3.fromRGB(101,  67,  33),
         bendy          = Color3.fromRGB(  0,   0,   0),
     }
-
     local function applyHighlight(character, color)
         local old = character:FindFirstChild("NameHighlighter")
         if old then old:Destroy() end
         local hl = Instance.new("Highlight")
-        hl.Name          = "NameHighlighter"
-        hl.Adornee       = character
-        hl.FillColor     = color
-        hl.OutlineColor  = color
-        hl.DepthMode     = Enum.HighlightDepthMode.AlwaysOnTop
-        hl.Parent        = character
+        hl.Name         = "NameHighlighter"
+        hl.Adornee      = character
+        hl.FillColor    = color
+        hl.OutlineColor = color
+        hl.DepthMode    = Enum.HighlightDepthMode.AlwaysOnTop
+        hl.Parent       = character
     end
-
-    for _, player in ipairs(Players:GetPlayers()) do
-        if player.Character then
-            local folder = player.Character:FindFirstChild("CharacterFolder")
-            local nameVal = folder and folder:FindFirstChild("CharacterName")
-            if nameVal then
-                local key = nameVal.Value:lower()
-                local color = nameToColor[key]
-                if color then applyHighlight(player.Character, color) end
+    for _, plr in ipairs(Players:GetPlayers()) do
+        if plr.Character then
+            local folder = plr.Character:FindFirstChild("CharacterFolder")
+            local nv = folder and folder:FindFirstChild("CharacterName")
+            if nv then
+                local col = nameToColor[nv.Value:lower()]
+                if col then applyHighlight(plr.Character, col) end
             end
         end
-        player.CharacterAdded:Connect(function(char)
-            local folder = char:WaitForChild("CharacterFolder", 3)
-            local nameVal = folder and folder:FindFirstChild("CharacterName")
-            if nameVal then
-                local color = nameToColor[nameVal.Value:lower()]
-                if color then applyHighlight(char, color) end
+        plr.CharacterAdded:Connect(function(c)
+            local folder = c:WaitForChild("CharacterFolder",3)
+            local nv = folder and folder:FindFirstChild("CharacterName")
+            if nv then
+                local col = nameToColor[nv.Value:lower()]
+                if col then applyHighlight(c, col) end
             end
         end)
     end
-    Players.PlayerAdded:Connect(function(player)
-        player.CharacterAdded:Connect(function(char)
-            local folder = char:WaitForChild("CharacterFolder", 3)
-            local nameVal = folder and folder:FindFirstChild("CharacterName")
-            if nameVal then
-                local color = nameToColor[nameVal.Value:lower()]
-                if color then applyHighlight(char, color) end
+    Players.PlayerAdded:Connect(function(plr)
+        plr.CharacterAdded:Connect(function(c)
+            local folder = c:WaitForChild("CharacterFolder",3)
+            local nv = folder and folder:FindFirstChild("CharacterName")
+            if nv then
+                local col = nameToColor[nv.Value:lower()]
+                if col then applyHighlight(c, col) end
             end
         end)
     end)
+end
+createAbilityButton(dcFrame, UDim2.new(0,180,0,36), UDim2.new(0.1,0,0.31,0), "ESP", enableESP)
+
+createAbilityButton(dcFrame, UDim2.new(0,180,0,36), UDim2.new(0.1,0,0.40,0), "Self-Heal", function()
+    ReplicatedStorage.PlayerRemoteEvents.Sayori.Heal:FireServer(LocalPlayer.Character)
 end)
 
--- === Infection Section: SPI Dash ===
-local COOLDOWN_TIME = 15
-local isOnCooldown = false
-local infectionButton = createAbilityButton(infectionFrame, UDim2.new(0,140,0,50), UDim2.new(0.4,0,0.4,0), "Hammer Spin", function()
-    if isOnCooldown then return end
-    isOnCooldown = true
-    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-    local hrp = char:WaitForChild("HumanoidRootPart")
-    local humanoid = char:FindFirstChildOfClass("Humanoid")
-    local remote = char:FindFirstChild("swing_client") and char.swing_client:FindFirstChild("fire")
-    task.spawn(function()
-        for i = 1, 4 do
-            if remote then remote:FireServer() end
-            task.wait(0.25)
+createAbilityButton(dcFrame, UDim2.new(0,180,0,36), UDim2.new(0.1,0,0.49,0), "Egg Trap", function()
+    ReplicatedStorage.PlayerRemoteEvents.eggman.mineTrap:FireServer()
+end)
+
+-- “-10 Hp Player” and its Submit HP
+createAbilityButton(dcFrame, UDim2.new(0,180,0,36), UDim2.new(0.1,0,0.58,0), "-10 Hp Player", function()
+    playerListFrame.Visible = not playerListFrame.Visible
+    if playerListFrame.Visible then refreshPlayerList("hp") end
+end)
+
+createAbilityButton(dcFrame, UDim2.new(0,100,0,40), UDim2.new(0.7,0,0.58,0), "Submit HP", function()
+    if selectedHpUser then
+        local t = Players:FindFirstChild(selectedHpUser)
+        if t and t.Character then
+            ReplicatedStorage.PlayerRemoteEvents.ImpulsePush:FireServer(t.Character)
         end
+    end
+end)
+
+-- “Spring+” button only
+createAbilityButton(dcFrame, UDim2.new(0,180,0,36), UDim2.new(0.1,0,0.67,0), "Spring+", function()
+    local springEvent = ReplicatedStorage.PlayerRemoteEvents.SpringEvent
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    local hrp  = char:WaitForChild("HumanoidRootPart")
+    springEvent:FireServer(hrp.Position, "put")
+end)
+
+-- === Infection Section ===
+local infectionFrame = Instance.new("Frame", MainGui)
+infectionFrame.Size                 = UDim2.new(1,0,0,contentHeight)
+infectionFrame.Position             = UDim2.new(0,0,0,topBarHeight)
+infectionFrame.BackgroundTransparency = 1
+infectionFrame.Visible              = false
+Instance.new("UICorner", infectionFrame).CornerRadius = UDim.new(0,10)
+
+local COOLDOWN = 15
+local onCD = false
+createAbilityButton(infectionFrame, UDim2.new(0,140,0,50), UDim2.new(0.4,0,0.4,0), "Hammer Spin", function()
+    if onCD then return end
+    onCD = true
+    local c   = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    local hrp = c:WaitForChild("HumanoidRootPart")
+    local hum = c:FindFirstChildOfClass("Humanoid")
+    local rem = c:FindFirstChild("swing_client") and c.swing_client:FindFirstChild("fire")
+    task.spawn(function()
+        for i = 1,4 do if rem then rem:FireServer() end; task.wait(0.25) end
     end)
-    local bv = Instance.new("BodyVelocity")
+    local bv = Instance.new("BodyVelocity", hrp)
     bv.Velocity = hrp.CFrame.LookVector * 40
     bv.MaxForce = Vector3.new(5e4,0,5e4)
-    bv.Parent = hrp
-    if humanoid then
-        local animator = humanoid:FindFirstChildOfClass("Animator") or Instance.new("Animator", humanoid)
-        local dashAnim = Instance.new("Animation")
-        dashAnim.AnimationId = "rbxassetid://91326134454679"
-        local track = animator:LoadAnimation(dashAnim)
-        track:Play()
+    if hum then
+        local anim = Instance.new("Animation")
+        anim.AnimationId = "rbxassetid://91326134454679"
+        (hum:FindFirstChildOfClass("Animator") or Instance.new("Animator",hum))
+          :LoadAnimation(anim):Play()
     end
     task.delay(1, function() bv:Destroy() end)
-    infectionButton.Active = false
-    infectionButton.AutoButtonColor = false
-    infectionButton.TextColor3 = Color3.fromRGB(255,0,0)
-    local tween = TweenService:Create(
-        infectionButton,
-        TweenInfo.new(COOLDOWN_TIME, Enum.EasingStyle.Linear),
-        { TextColor3 = Color3.fromRGB(255,255,255) }
-    )
+    local btn = infectionFrame:FindFirstChildOfClass("TextButton")
+    btn.Active = false; btn.AutoButtonColor = false; btn.TextColor3 = Color3.fromRGB(255,0,0)
+    local tween = TweenService:Create(btn, TweenInfo.new(COOLDOWN,Enum.EasingStyle.Linear),
+                                      { TextColor3 = Color3.fromRGB(255,255,255) })
     tween:Play()
-    task.delay(COOLDOWN_TIME, function()
-        infectionButton.Active = true
-        infectionButton.AutoButtonColor = true
-        isOnCooldown = false
+    task.delay(COOLDOWN, function()
+        btn.Active = true; btn.AutoButtonColor = true; onCD = false
     end)
 end)
 
--- Key submission and show main GUI
+-- Section Tabs
+local SectionTab = Instance.new("Frame", MainGui)
+SectionTab.Size             = UDim2.new(1,0,0,tabHeight)
+SectionTab.Position         = UDim2.new(0,0,1,-tabHeight)
+SectionTab.BackgroundColor3 = Color3.fromRGB(60,40,85)
+Instance.new("UICorner", SectionTab).CornerRadius = UDim.new(0,6)
+
+createAbilityButton(SectionTab, UDim2.new(0.25,0,1,0), UDim2.new(0.45,0,0,0), "DC", function()
+    dcFrame.Visible        = true
+    infectionFrame.Visible = false
+end)
+createAbilityButton(SectionTab, UDim2.new(0.25,0,1,0), UDim2.new(0.72,0,0,0), "infection", function()
+    dcFrame.Visible        = false
+    infectionFrame.Visible = true
+end)
+
+-- Key submission
 SubmitKeyBtn.MouseButton1Click:Connect(function()
     if KeyBox.Text == correctKey then
         KeyFrame.Visible = false
-        MainGui.Visible = true
-        dcFrame.Visible = true
+        MainGui.Visible  = true
+        dcFrame.Visible  = true
     else
         KeyBox.Text = ""
-        KeyBox.PlaceholderText = "Invalid Key, try again"
+        KeyBox.PlaceholderText = "Invalid Key"
     end
 end)
 
 -- Close/Expand logic
-local guiExpanded = true
+local expanded = true
 XButton.MouseButton1Click:Connect(function()
-    if guiExpanded then
-        MainGui.Size = UDim2.new(0,guiWidth,0,topBarHeight+tabHeight)
-        dcFrame.Visible = false
-        infectionFrame.Visible = false
-        SectionTab.Visible = false
+    if expanded then
+        MainGui.Size                = UDim2.new(0,guiWidth,0,topBarHeight+tabHeight)
+        dcFrame.Visible             = false
+        infectionFrame.Visible      = false
+        SectionTab.Visible          = false
     else
-        MainGui.Size = UDim2.new(0,guiWidth,0,fullHeight)
-        SectionTab.Visible = true
+        MainGui.Size                = UDim2.new(0,guiWidth,0,fullHeight)
+        SectionTab.Visible          = true
         if dcFrame.Visible then dcFrame.Visible = true else infectionFrame.Visible = true end
     end
-    guiExpanded = not guiExpanded
+    expanded = not expanded
 end)
 
--- Ensure reset on respawn
+-- Reset on respawn
 LocalPlayer.CharacterAdded:Connect(function()
-    if MainGui.Visible and guiExpanded then dcFrame.Visible = true end
-    SectionTab.Visible = guiExpanded
+    if MainGui.Visible and expanded then dcFrame.Visible = true end
+    SectionTab.Visible = expanded
 end)
 
 print("GUI fully initialized.")
